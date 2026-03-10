@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="trivia-bg">
+
+<div class="trivia-container">
+
+<h2>Trivia Simpsons</h2>
+
+<div id="score">Pregunta 1 / 5</div>
+
+<div id="quiz">
+
+<p id="question"></p>
+
+<div id="answers"></div>
+
+</div>
+
+<div id="result" style="display:none;"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const preguntas = [
+
+{
+pregunta:"¿Cuál es el trabajo de Homero?",
+opciones:["Policía","Inspector de seguridad nuclear","Profesor","Alcalde"],
+correcta:1
+},
+
+{
+pregunta:"¿Cómo se llama el bar de Moe?",
+opciones:["Bar Moe","Taberna Moe","Moe's Tavern","Springfield Bar"],
+correcta:2
+},
+
+{
+pregunta:"¿Cuál es el apellido de Bart?",
+opciones:["Simpson","Johnson","Brown","Miller"],
+correcta:0
+},
+
+{
+pregunta:"¿Cuál es el instrumento de Lisa?",
+opciones:["Piano","Violín","Saxofón","Guitarra"],
+correcta:2
+},
+
+{
+pregunta:"¿Cómo se llama el jefe de Homero?",
+opciones:["Burns","Smith","Clark","Howard"],
+correcta:0
+}
+
+]
+
+let actual = 0
+let puntos = 0
+
+function mostrarPregunta(){
+
+const q = preguntas[actual]
+
+document.getElementById("question").innerText = q.pregunta
+
+document.getElementById("score").innerText = "Pregunta " + (actual+1) + " / 5"
+
+const answers = document.getElementById("answers")
+
+answers.innerHTML=""
+
+q.opciones.forEach((opcion,i)=>{
+
+const btn = document.createElement("button")
+
+btn.innerText = opcion
+
+btn.onclick = ()=>responder(i)
+
+answers.appendChild(btn)
+
+})
+
+}
+
+function responder(i){
+
+if(i===preguntas[actual].correcta){
+puntos++
+}
+
+actual++
+
+if(actual<preguntas.length){
+
+mostrarPregunta()
+
+}else{
+
+mostrarResultado()
+
+}
+
+}
+
+function mostrarResultado(){
+
+document.getElementById("quiz").style.display="none"
+
+const r = document.getElementById("result")
+
+r.style.display="block"
+
+r.innerHTML = "Tu puntaje es: " + puntos + " / 5"
+
+}
+
+mostrarPregunta()
+
+</script>
+
+{% endblock %}

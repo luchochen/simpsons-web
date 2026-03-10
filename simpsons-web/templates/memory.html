@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="memory-bg">
+
+<div class="memory-container">
+
+<h2>Memory Simpsons</h2>
+
+<div id="memory-board"></div>
+
+<div id="memory-result"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const cartas = [
+
+"homero","homero",
+"bart","bart",
+"lisa","lisa",
+"marge","marge",
+"maggie","maggie",
+"burns","burns"
+
+]
+
+cartas.sort(()=>Math.random()-0.5)
+
+let seleccionadas=[]
+let bloqueado=false
+let parejas=0
+
+const board=document.getElementById("memory-board")
+
+cartas.forEach(nombre=>{
+
+const carta=document.createElement("div")
+
+carta.className="memory-card"
+
+carta.dataset.valor=nombre
+
+carta.innerHTML="?"
+
+carta.onclick=()=>revelar(carta)
+
+board.appendChild(carta)
+
+})
+
+function revelar(carta){
+
+if(bloqueado) return
+if(seleccionadas.includes(carta)) return
+
+carta.innerHTML="<img src='/static/images/memory/"+carta.dataset.valor+".png'>"
+
+seleccionadas.push(carta)
+
+if(seleccionadas.length===2){
+
+bloqueado=true
+
+setTimeout(()=>{
+
+if(seleccionadas[0].dataset.valor===seleccionadas[1].dataset.valor){
+
+parejas++
+
+seleccionadas=[]
+
+bloqueado=false
+
+if(parejas===6){
+
+document.getElementById("memory-result").innerText="¡Ganaste!"
+
+}
+
+}else{
+
+seleccionadas[0].innerHTML="?"
+seleccionadas[1].innerHTML="?"
+
+seleccionadas=[]
+
+bloqueado=false
+
+}
+
+},800)
+
+}
+
+}
+
+</script>
+
+{% endblock %}

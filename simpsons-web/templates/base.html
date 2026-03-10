@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Simpsons Arcade</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+<h1>Simpsons Arcade</h1>
+
+<div class="menu">
+
+<a href="/">Inicio</a>
+<a href="/trivia">Trivia</a>
+<a href="/memory">Memory</a>
+
+</div>
+
+</nav>
+
+<div class="contenido">
+
+{% block content %}{% endblock %}
+
+</div>
+
+</body>
+</html>
